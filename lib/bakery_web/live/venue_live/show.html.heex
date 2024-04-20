@@ -1,0 +1,39 @@
+<.header>
+  Venue <%= @venue.id %>
+  <:subtitle>This is a venue record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/venues/#{@venue}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit venue</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @venue.name %></:item>
+  <:item title="Street"><%= @venue.street %></:item>
+  <:item title="City"><%= @venue.city %></:item>
+  <:item title="State"><%= @venue.state %></:item>
+  <:item title="Zip"><%= @venue.zip %></:item>
+  <:item title="Contact"><%= @venue.contact %></:item>
+  <:item title="Phone"><%= @venue.phone %></:item>
+  <:item title="Email"><%= @venue.email %></:item>
+  <:item title="Distance in miles"><%= @venue.distance_in_miles %></:item>
+</.list>
+
+<.back navigate={~p"/venues"}>Back to venues</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="venue-modal"
+  show
+  on_cancel={JS.patch(~p"/venues/#{@venue}")}
+>
+  <.live_component
+    module={BakeryWeb.VenueLive.FormComponent}
+    id={@venue.id}
+    title={@page_title}
+    action={@live_action}
+    venue={@venue}
+    patch={~p"/venues/#{@venue}"}
+  />
+</.modal>

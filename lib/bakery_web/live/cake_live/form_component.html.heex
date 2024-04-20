@@ -1,0 +1,43 @@
+<div>
+  <.header>
+    <%= @title %>
+    <:subtitle>Use this form to manage cake records in your database.</:subtitle>
+  </.header>
+
+  <.simple_form
+    for={@form}
+    id="cake-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <.input field={@form[:tiers]} type="number" label="Tiers" />
+    <.input field={@form[:shape]} type="text" label="Shape" />
+    <.input field={@form[:style]} type="text" label="Style" />
+    <.input field={@form[:base_price]} type="number" label="Base price" step="any" />
+    <.input field={@form[:num_guests]} type="number" label="Num guests" />
+    <.input field={@form[:t1_flavor]} type="text" label="T1 flavor" />
+    <.input field={@form[:t2_flavor]} type="text" label="T2 flavor" />
+    <.input field={@form[:t3_flavor]} type="text" label="T3 flavor" />
+    <.input field={@form[:t4_flavor]} type="text" label="T4 flavor" />
+    <.input field={@form[:t5_flavor]} type="text" label="T5 flavor" />
+    <.input field={@form[:t1_filling]} type="text" label="T1 filling" />
+    <.input field={@form[:t2_filling]} type="text" label="T2 filling" />
+    <.input field={@form[:t3_filling]} type="text" label="T3 filling" />
+    <.input field={@form[:t4_filling]} type="text" label="T4 filling" />
+    <.input field={@form[:t5_filling]} type="text" label="T5 filling" />
+    <.input field={@form[:t1_add_cost]} type="number" label="T1 add cost" step="any" />
+    <.input field={@form[:t2_add_cost]} type="number" label="T2 add cost" step="any" />
+    <.input field={@form[:t3_add_cost]} type="number" label="T3 add cost" step="any" />
+    <.input field={@form[:t4_add_cost]} type="number" label="T4 add cost" step="any" />
+    <.input field={@form[:t5_add_cost]} type="number" label="T5 add cost" step="any" />
+    <.input field={@form[:t1_description]} type="text" label="T1 description" />
+    <.input field={@form[:t2_description]} type="text" label="T2 description" />
+    <.input field={@form[:t3_description]} type="text" label="T3 description" />
+    <.input field={@form[:t4_description]} type="text" label="T4 description" />
+    <.input field={@form[:t5_description]} type="text" label="T5 description" />
+    <:actions>
+      <.button phx-disable-with="Saving...">Save Cake</.button>
+    </:actions>
+  </.simple_form>
+</div>

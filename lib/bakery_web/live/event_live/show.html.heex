@@ -1,0 +1,107 @@
+<div class="grid grid-cols-1 gap-4">
+  <div class="grid grid-cols-3 gap-4">
+    <div class="col-span-2 panel">
+      <.header>
+        Event <%= @event.name %>
+        <:actions>
+          <.link patch={~p"/events/#{@event}/show/edit"} phx-click={JS.push_focus()}>
+            <.button>Edit event</.button>
+          </.link>
+        </:actions>
+      </.header>
+
+      <div class="mt-5">
+        <.panel_title></.panel_title>
+        <.item id="name" title="Name"><%= @event.name %></.item>
+        <.item id="when" title="When"><%= @event.when %></.item>
+        <.item id="deliv_time" title="Delivery time"><%= @event.delivery_time %></.item>
+        <.item id="recp_time" title="Reception time"><%= @event.reception_time %></.item>
+        <.item id="c1_name" title="C1 name"><%= @event.c1_name %></.item>
+        <.item id="c1_name" title="C1 email"><%= @event.c1_email %></.item>
+        <.item id="c1_phone" title="C1 phone"><%= @event.c1_phone %></.item>
+        <.item id="c2_name" title="C2 name"><%= @event.c2_name %></.item>
+        <.item id="c2_phone" title="C2 phone"><%= @event.c2_phone %></.item>
+        <.item id="c2_email" title="C2 email"><%= @event.c2_email %></.item>
+        <.item :if={@event.venue} title="Venue"><%= @event.venue.name %></.item>
+      </div>
+
+      <.back navigate={~p"/events"}>Back to events</.back>
+    </div>
+    <div class="panel">
+      <div class="text-lg font-semibold leading-8 text-zinc-800">
+        <span><.icon name="hero-shopping-cart" class="h-6 w-6" /></span>
+        <span>Shopping Cart</span>
+      </div>
+      <div class="mt-7">
+        <.panel_title></.panel_title>
+        <.item id="cakes" title="Cakes"><%= count_cakes(@event) %></.item>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="grid grid-rows-3 grid-flow-col gap-4">
+      <div
+        class="py-5 bg-green-300 rounded-lg font-bold text-2xl text-center shadow-lg shadow-slate-300"
+        phx-click="add_cake"
+      >
+        <h1>Cakes</h1>
+      </div>
+      <div class="py-5 bg-green-300 rounded-lg font-bold text-2xl text-center shadow-lg shadow-slate-300">
+        Cup Cakes
+      </div>
+      <div class="py-5 bg-green-300 rounded-lg font-bold text-2xl text-center shadow-lg shadow-slate-300">
+        Sheet Cakes
+      </div>
+      <div class="py-5 bg-sky-300 rounded-lg font-bold text-2xl text-center shadow-lg shadow-slate-300">
+        Vegan Cakes
+      </div>
+      <div class="py-5 bg-sky-300 rounded-lg font-bold text-2xl text-center shadow-lg shadow-slate-300">
+        Vegan Cup Cakes
+      </div>
+      <div class="py-5 bg-sky-300 rounded-lg font-bold text-2xl text-center shadow-lg shadow-slate-300">
+        Vegan Sheet Cakes
+      </div>
+      <div class="py-5 bg-fuchsia-300 rounded-lg font-bold text-2xl text-center shadow-lg shadow-slate-300">
+        Gelato Cart
+      </div>
+      <div class="py-5 bg-fuchsia-300 rounded-lg font-bold text-2xl text-center shadow-lg shadow-slate-300">
+        Deserts
+      </div>
+      <div class="py-5 bg-fuchsia-300 rounded-lg font-bold text-2xl text-center shadow-lg shadow-slate-300">
+        Cookies
+      </div>
+    </div>
+  </div>
+</div>
+<.modal
+  :if={@live_action == :edit}
+  id="event-modal"
+  show
+  on_cancel={JS.patch(~p"/events/#{@event}")}
+>
+  <.live_component
+    module={BakeryWeb.EventLive.FormComponent}
+    id={@event.id}
+    title={@page_title}
+    action={@live_action}
+    event={@event}
+    patch={~p"/events/#{@event}"}
+  />
+</.modal>
+
+<.modal
+  :if={@show_modal == :add_cake_modal}
+  id="add-cake-modal"
+  show
+  on_cancel={JS.patch(~p"/events/#{@event}")}
+>
+  <.live_component
+    module={BakeryWeb.CakeLive.FormComponent}
+    id={:new}
+    title="Adding Cake to Event"
+    action={:new}
+    cake={%Bakery.Events.Cake{}}
+    event_id={@event.id}
+    patch={~p"/events/#{@event}"}
+  />
+</.modal>

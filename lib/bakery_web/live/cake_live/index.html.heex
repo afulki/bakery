@@ -1,0 +1,65 @@
+<.header>
+  Listing Cakes
+  <:actions>
+    <.link patch={~p"/cakes/new"}>
+      <.button>New Cake</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="cakes"
+  rows={@streams.cakes}
+  row_click={fn {_id, cake} -> JS.navigate(~p"/cakes/#{cake}") end}
+>
+  <:col :let={{_id, cake}} label="Tiers"><%= cake.tiers %></:col>
+  <:col :let={{_id, cake}} label="Shape"><%= cake.shape %></:col>
+  <:col :let={{_id, cake}} label="Style"><%= cake.style %></:col>
+  <:col :let={{_id, cake}} label="Base price"><%= cake.base_price %></:col>
+  <:col :let={{_id, cake}} label="Num guests"><%= cake.num_guests %></:col>
+  <:col :let={{_id, cake}} label="T1 flavor"><%= cake.t1_flavor %></:col>
+  <:col :let={{_id, cake}} label="T2 flavor"><%= cake.t2_flavor %></:col>
+  <:col :let={{_id, cake}} label="T3 flavor"><%= cake.t3_flavor %></:col>
+  <:col :let={{_id, cake}} label="T4 flavor"><%= cake.t4_flavor %></:col>
+  <:col :let={{_id, cake}} label="T5 flavor"><%= cake.t5_flavor %></:col>
+  <:col :let={{_id, cake}} label="T1 filling"><%= cake.t1_filling %></:col>
+  <:col :let={{_id, cake}} label="T2 filling"><%= cake.t2_filling %></:col>
+  <:col :let={{_id, cake}} label="T3 filling"><%= cake.t3_filling %></:col>
+  <:col :let={{_id, cake}} label="T4 filling"><%= cake.t4_filling %></:col>
+  <:col :let={{_id, cake}} label="T5 filling"><%= cake.t5_filling %></:col>
+  <:col :let={{_id, cake}} label="T1 add cost"><%= cake.t1_add_cost %></:col>
+  <:col :let={{_id, cake}} label="T2 add cost"><%= cake.t2_add_cost %></:col>
+  <:col :let={{_id, cake}} label="T3 add cost"><%= cake.t3_add_cost %></:col>
+  <:col :let={{_id, cake}} label="T4 add cost"><%= cake.t4_add_cost %></:col>
+  <:col :let={{_id, cake}} label="T5 add cost"><%= cake.t5_add_cost %></:col>
+  <:col :let={{_id, cake}} label="T1 description"><%= cake.t1_description %></:col>
+  <:col :let={{_id, cake}} label="T2 description"><%= cake.t2_description %></:col>
+  <:col :let={{_id, cake}} label="T3 description"><%= cake.t3_description %></:col>
+  <:col :let={{_id, cake}} label="T4 description"><%= cake.t4_description %></:col>
+  <:col :let={{_id, cake}} label="T5 description"><%= cake.t5_description %></:col>
+  <:action :let={{_id, cake}}>
+    <div class="sr-only">
+      <.link navigate={~p"/cakes/#{cake}"}>Show</.link>
+    </div>
+    <.link patch={~p"/cakes/#{cake}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, cake}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: cake.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="cake-modal" show on_cancel={JS.patch(~p"/cakes")}>
+  <.live_component
+    module={BakeryWeb.CakeLive.FormComponent}
+    id={@cake.id || :new}
+    title={@page_title}
+    action={@live_action}
+    cake={@cake}
+    patch={~p"/cakes"}
+  />
+</.modal>

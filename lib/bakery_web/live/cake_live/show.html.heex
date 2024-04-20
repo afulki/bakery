@@ -1,0 +1,50 @@
+<.header>
+  Cake <%= @cake.id %>
+  <:subtitle>This is a cake record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/cakes/#{@cake}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit cake</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Tiers"><%= @cake.tiers %></:item>
+  <:item title="Shape"><%= @cake.shape %></:item>
+  <:item title="Style"><%= @cake.style %></:item>
+  <:item title="Base price"><%= @cake.base_price %></:item>
+  <:item title="Num guests"><%= @cake.num_guests %></:item>
+  <:item title="T1 flavor"><%= @cake.t1_flavor %></:item>
+  <:item title="T2 flavor"><%= @cake.t2_flavor %></:item>
+  <:item title="T3 flavor"><%= @cake.t3_flavor %></:item>
+  <:item title="T4 flavor"><%= @cake.t4_flavor %></:item>
+  <:item title="T5 flavor"><%= @cake.t5_flavor %></:item>
+  <:item title="T1 filling"><%= @cake.t1_filling %></:item>
+  <:item title="T2 filling"><%= @cake.t2_filling %></:item>
+  <:item title="T3 filling"><%= @cake.t3_filling %></:item>
+  <:item title="T4 filling"><%= @cake.t4_filling %></:item>
+  <:item title="T5 filling"><%= @cake.t5_filling %></:item>
+  <:item title="T1 add cost"><%= @cake.t1_add_cost %></:item>
+  <:item title="T2 add cost"><%= @cake.t2_add_cost %></:item>
+  <:item title="T3 add cost"><%= @cake.t3_add_cost %></:item>
+  <:item title="T4 add cost"><%= @cake.t4_add_cost %></:item>
+  <:item title="T5 add cost"><%= @cake.t5_add_cost %></:item>
+  <:item title="T1 description"><%= @cake.t1_description %></:item>
+  <:item title="T2 description"><%= @cake.t2_description %></:item>
+  <:item title="T3 description"><%= @cake.t3_description %></:item>
+  <:item title="T4 description"><%= @cake.t4_description %></:item>
+  <:item title="T5 description"><%= @cake.t5_description %></:item>
+</.list>
+
+<.back navigate={~p"/cakes"}>Back to cakes</.back>
+
+<.modal :if={@live_action == :edit} id="cake-modal" show on_cancel={JS.patch(~p"/cakes/#{@cake}")}>
+  <.live_component
+    module={BakeryWeb.CakeLive.FormComponent}
+    id={@cake.id}
+    title={@page_title}
+    action={@live_action}
+    cake={@cake}
+    patch={~p"/cakes/#{@cake}"}
+  />
+</.modal>

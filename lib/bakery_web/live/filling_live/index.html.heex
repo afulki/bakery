@@ -1,0 +1,41 @@
+<.header>
+  Listing Fillings
+  <:actions>
+    <.link patch={~p"/fillings/new"}>
+      <.button>New Filling</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="fillings"
+  rows={@streams.fillings}
+  row_click={fn {_id, filling} -> JS.navigate(~p"/fillings/#{filling}") end}
+>
+  <:col :let={{_id, filling}} label="Name"><%= filling.name %></:col>
+  <:action :let={{_id, filling}}>
+    <div class="sr-only">
+      <.link navigate={~p"/fillings/#{filling}"}>Show</.link>
+    </div>
+    <.link patch={~p"/fillings/#{filling}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, filling}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: filling.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="filling-modal" show on_cancel={JS.patch(~p"/fillings")}>
+  <.live_component
+    module={BakeryWeb.FillingLive.FormComponent}
+    id={@filling.id || :new}
+    title={@page_title}
+    action={@live_action}
+    filling={@filling}
+    patch={~p"/fillings"}
+  />
+</.modal>

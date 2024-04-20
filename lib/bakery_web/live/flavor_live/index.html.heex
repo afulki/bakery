@@ -1,0 +1,41 @@
+<.header>
+  Listing Flavors
+  <:actions>
+    <.link patch={~p"/flavors/new"}>
+      <.button>New Flavor</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="flavors"
+  rows={@streams.flavors}
+  row_click={fn {_id, flavor} -> JS.navigate(~p"/flavors/#{flavor}") end}
+>
+  <:col :let={{_id, flavor}} label="Name"><%= flavor.name %></:col>
+  <:action :let={{_id, flavor}}>
+    <div class="sr-only">
+      <.link navigate={~p"/flavors/#{flavor}"}>Show</.link>
+    </div>
+    <.link patch={~p"/flavors/#{flavor}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, flavor}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: flavor.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="flavor-modal" show on_cancel={JS.patch(~p"/flavors")}>
+  <.live_component
+    module={BakeryWeb.FlavorLive.FormComponent}
+    id={@flavor.id || :new}
+    title={@page_title}
+    action={@live_action}
+    flavor={@flavor}
+    patch={~p"/flavors"}
+  />
+</.modal>

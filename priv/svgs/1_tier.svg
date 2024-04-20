@@ -1,0 +1,16 @@
+<svg width="100%" height="100%" viewBox="0 0 78 63" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-553.29,-423.637)">
+        <g transform="matrix(0.384669,0,0,0.494513,476.725,307.425)">
+            <g>
+                <g>
+                    <g transform="matrix(1,0,0,1,-0.34108,0)">
+                        <path d="M200.749,328.007C200.749,314.267 200.682,281.754 200.682,268.007C200.682,250.349 245.185,236.013 300,236.013C354.815,236.013 399.318,250.349 399.318,268.007C399.318,281.746 399.385,314.259 399.385,328.007C399.385,345.664 354.882,360 300.067,360C245.252,360 200.749,345.664 200.749,328.007Z" style="fill:rgb(255,252,252);stroke:black;stroke-width:2.26px;"/>
+                    </g>
+                    <g transform="matrix(1,0,0,1,-0.374573,-60)">
+                        <ellipse cx="300.067" cy="328.007" rx="99.318" ry="31.993" style="fill:white;stroke:black;stroke-width:2.26px;"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

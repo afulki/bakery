@@ -93,7 +93,7 @@
   :if={@show_modal == :add_cake_modal}
   id="add-cake-modal"
   show
-  on_cancel={JS.patch(~p"/events/#{@event}")}
+  on_cancel={JS.navigate(~p"/events/#{@event}")}
 >
   <.live_component
     module={BakeryWeb.CakeLive.FormComponent}

@@ -111,6 +111,13 @@ defmodule BakeryWeb.Router do
 
       live "/cake_templates/:id", CakeTemplateLive.Show, :show
       live "/cake_templates/:id/show/edit", CakeTemplateLive.Show, :edit
+
+      live "/sheet_cakes", SheetCakeLive.Index, :index
+      live "/sheet_cakes/new", SheetCakeLive.Index, :new
+      live "/sheet_cakes/:id/edit", SheetCakeLive.Index, :edit
+
+      live "/sheet_cakes/:id", SheetCakeLive.Show, :show
+      live "/sheet_cakes/:id/show/edit", SheetCakeLive.Show, :edit
     end
   end
 

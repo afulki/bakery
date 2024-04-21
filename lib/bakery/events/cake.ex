@@ -79,4 +79,17 @@ defmodule Bakery.Events.Cake do
       :event_id
     ])
   end
+
+  def sub_total(cake) do
+    sum([cake.base_price, calc_cake_addons(cake)])
+  end
+
+  defp sum(values) do
+    Enum.reduce(values, Decimal.new(1, 0, 0), fn v, acc -> Decimal.add(acc, v) end)
+  end
+
+  defp calc_cake_addons(cake) do
+    [cake.t1_add_cost, cake.t2_add_cost, cake.t3_add_cost, cake.t4_add_cost, cake.t5_add_cost]
+    |> sum()
+  end
 end

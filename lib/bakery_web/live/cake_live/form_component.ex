@@ -38,6 +38,11 @@ defmodule BakeryWeb.CakeLive.FormComponent do
   end
 
   def handle_event("save", %{"cake" => cake_params}, socket) do
+    cake_params =
+      cake_params
+      |> IO.inspect(label: "Cake Params on Save")
+      |> update_cake_params()
+
     %{event_id: event_id} = socket.assigns
     cake_params = Map.put(cake_params, "event_id", event_id)
     save_cake(socket, socket.assigns.action, cake_params)
@@ -96,36 +101,6 @@ defmodule BakeryWeb.CakeLive.FormComponent do
     |> Map.put("base_price", cake_template.price)
     |> IO.inspect(label: "Updated params")
   end
-
-  # defp assign_updated_cake(socket) do
-  #   cake = socket.assigns.cake
-  #
-  #   %{
-  #     "cake_shape" => cake_shape,
-  #     "cake_style" => cake_style,
-  #     "number_of_guests" => number_of_guests
-  #   } = cake
-  #
-  #   cake_template =
-  #     find_template(number_of_guests, cake_style, cake_shape) ||
-  #       find_template("25", "single", "round")
-  #
-  #   cake =
-  #     cake
-  #     |> Map.put("base_price", cake_template.price)
-  #
-  #   payment =
-  #     socket.assigns.payment
-  #     |> Map.put("cake_price", cake_template.price)
-  #     |> assign_calculated_fields(socket)
-  #
-  #   socket
-  #   |> assign(:cake_template, cake_template)
-  #   |> assign(:cake, cake)
-  #   |> assign(:number_of_tiers, cake_template.tiers)
-  #   |> assign(:cake_image, name_from_template(cake_template))
-  #   |> assign(:payment, payment)
-  # end
 
   defp find_template(number_of_guests, style, shape) do
     Bakery.Templates.find_template(number_of_guests, style, shape)

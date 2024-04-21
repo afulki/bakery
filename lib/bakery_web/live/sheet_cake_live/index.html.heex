@@ -1,0 +1,43 @@
+<.header>
+  Listing Sheet cakes
+  <:actions>
+    <.link patch={~p"/sheet_cakes/new"}>
+      <.button>New Sheet cake</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="sheet_cakes"
+  rows={@streams.sheet_cakes}
+  row_click={fn {_id, sheet_cake} -> JS.navigate(~p"/sheet_cakes/#{sheet_cake}") end}
+>
+  <:col :let={{_id, sheet_cake}} label="Name"><%= sheet_cake.name %></:col>
+  <:col :let={{_id, sheet_cake}} label="Quantity"><%= sheet_cake.quantity %></:col>
+  <:col :let={{_id, sheet_cake}} label="Price"><%= sheet_cake.price %></:col>
+  <:action :let={{_id, sheet_cake}}>
+    <div class="sr-only">
+      <.link navigate={~p"/sheet_cakes/#{sheet_cake}"}>Show</.link>
+    </div>
+    <.link patch={~p"/sheet_cakes/#{sheet_cake}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, sheet_cake}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: sheet_cake.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="sheet_cake-modal" show on_cancel={JS.patch(~p"/sheet_cakes")}>
+  <.live_component
+    module={BakeryWeb.SheetCakeLive.FormComponent}
+    id={@sheet_cake.id || :new}
+    title={@page_title}
+    action={@live_action}
+    sheet_cake={@sheet_cake}
+    patch={~p"/sheet_cakes"}
+  />
+</.modal>

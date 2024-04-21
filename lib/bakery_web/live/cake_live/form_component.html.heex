@@ -1,9 +1,4 @@
 <div>
-  <.header>
-    <%= @title %>
-    <:subtitle>Use this form to manage cake records in your database.</:subtitle>
-  </.header>
-
   <.simple_form
     for={@form}
     id="cake-form"
@@ -11,31 +6,286 @@
     phx-change="validate"
     phx-submit="save"
   >
-    <.input field={@form[:tiers]} type="number" label="Tiers" />
-    <.input field={@form[:shape]} type="text" label="Shape" />
-    <.input field={@form[:style]} type="text" label="Style" />
-    <.input field={@form[:base_price]} type="number" label="Base price" step="any" />
-    <.input field={@form[:num_guests]} type="number" label="Num guests" />
-    <.input field={@form[:t1_flavor]} type="text" label="T1 flavor" />
-    <.input field={@form[:t2_flavor]} type="text" label="T2 flavor" />
-    <.input field={@form[:t3_flavor]} type="text" label="T3 flavor" />
-    <.input field={@form[:t4_flavor]} type="text" label="T4 flavor" />
-    <.input field={@form[:t5_flavor]} type="text" label="T5 flavor" />
-    <.input field={@form[:t1_filling]} type="text" label="T1 filling" />
-    <.input field={@form[:t2_filling]} type="text" label="T2 filling" />
-    <.input field={@form[:t3_filling]} type="text" label="T3 filling" />
-    <.input field={@form[:t4_filling]} type="text" label="T4 filling" />
-    <.input field={@form[:t5_filling]} type="text" label="T5 filling" />
-    <.input field={@form[:t1_add_cost]} type="number" label="T1 add cost" step="any" />
-    <.input field={@form[:t2_add_cost]} type="number" label="T2 add cost" step="any" />
-    <.input field={@form[:t3_add_cost]} type="number" label="T3 add cost" step="any" />
-    <.input field={@form[:t4_add_cost]} type="number" label="T4 add cost" step="any" />
-    <.input field={@form[:t5_add_cost]} type="number" label="T5 add cost" step="any" />
-    <.input field={@form[:t1_description]} type="text" label="T1 description" />
-    <.input field={@form[:t2_description]} type="text" label="T2 description" />
-    <.input field={@form[:t3_description]} type="text" label="T3 description" />
-    <.input field={@form[:t4_description]} type="text" label="T4 description" />
-    <.input field={@form[:t5_description]} type="text" label="T5 description" />
+    <div class="grid grid-rows-2 grid-flow-col gap-4">
+      <div class="col-span-2">
+        <div class="flex flex-row">
+          <div class="p-4 basis-1/2">
+            <p class="text-lg font-bold mb-2">Style of Cake?</p>
+            <.radio_group field={@form[:style]}>
+              <:radio value="single">Single Tier</:radio>
+              <:radio value="multi">Multiple Tiers</:radio>
+            </.radio_group>
+          </div>
+          <div class="p-4 basis-1/2">
+            <div :if={@form[:style].value == "single"}>
+              <p class="text-lg font-bold mb-2">Shape?</p>
+              <.radio_group field={@form[:shape]}>
+                <:radio value="round">Round</:radio>
+                <:radio value="square">Square</:radio>
+                <:radio value="heart">Heart</:radio>
+              </.radio_group>
+            </div>
+            <div :if={@form[:style].value == "multi"}>
+              <p class="text-lg font-bold mb-2">Shape?</p>
+              <.radio_group field={@form[:shape]}>
+                <:radio value="round">Round</:radio>
+                <:radio value="square">Square</:radio>
+                <:radio value="heart">Mixed</:radio>
+              </.radio_group>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-2 p-4">
+        <p class="text-lg font-bold mb-2">
+          Number of Guests?
+        </p>
+        <div :if={@form[:style].value == "single"} class="">
+          <div :if={@form[:shape].value == "round"}>
+            <.radio_group field={@form[:num_guests]}>
+              <:radio value="25">25</:radio>
+              <:radio value="35">35</:radio>
+              <:radio value="50">50</:radio>
+            </.radio_group>
+          </div>
+          <div :if={@form[:shape].value == "heart"}>
+            <.radio_group field={@form[:num_guests]}>
+              <:radio value="10">10</:radio>
+              <:radio value="20">20</:radio>
+              <:radio value="25-30">25-30</:radio>
+            </.radio_group>
+          </div>
+          <div :if={@form[:shape].value == "square"}>
+            <.radio_group field={@form[:num_guests]}>
+              <:radio value="30">30</:radio>
+              <:radio value="50">50</:radio>
+              <:radio value="70">70</:radio>
+              <:radio value="100">100</:radio>
+            </.radio_group>
+          </div>
+        </div>
+        <div :if={@form[:style].value == "multi"} class="">
+          <div :if={@form[:shape].value == "round"}>
+            <.radio_group field={@form[:num_guests]}>
+              <:radio value="25">25</:radio>
+              <:radio value="35">35</:radio>
+              <:radio value="50">50</:radio>
+              <:radio value="75">75</:radio>
+              <:radio value="100">100</:radio>
+              <:radio value="120-130">120-130</:radio>
+              <:radio value="150-160">150-160</:radio>
+              <:radio value="175-180">175-180</:radio>
+              <:radio value="200">200</:radio>
+            </.radio_group>
+          </div>
+          <div :if={@form[:shape].value == "mixed"}>
+            <.radio_group field={@form[:num_guests]}>
+              <:radio value="15">15</:radio>
+              <:radio value="20">20</:radio>
+            </.radio_group>
+          </div>
+          <div :if={@form[:shape].value == "square"}>
+            <.radio_group field={@form[:num_guests]}>
+              <:radio value="30">30</:radio>
+              <:radio value="50">50</:radio>
+              <:radio value="70">70</:radio>
+              <:radio value="100">100</:radio>
+            </.radio_group>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-1 row-span-2 p-4">
+        <div class="text-sm font-bold mb-2">
+          Number of Tiers: <%= @form[:tiers].value %>
+        </div>
+        <div class="text-md font-bold mb-2">
+          Base Price: <%= "$#{@form[:base_price].value}" %>
+        </div>
+        <!--
+        <.cake_image :if={@cake_template} cake_image={@cake_image} />
+-->
+      </div>
+    </div>
+    <div :if={@form[:tiers].value >= 1}>
+      <div class="border border-gray-300 p-4 mb-3">
+        <p class="text-lg font-bold mb-2">Top Tier</p>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <.input
+              field={@form[:t1_flavor_id]}
+              type="select"
+              options={@flavors}
+              label="Flavor"
+              prompt="Choose Flavor"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t1_filling_id]}
+              type="select"
+              options={@fillings}
+              label="Filling"
+              prompt="Choose Filling"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t1_add_cost]}
+              type="number"
+              label="Additional Cost $"
+              prompt="Additional Cost"
+            />
+          </div>
+          <div class="col-span-3">
+            <.input field={@form[:t1_description]} type="textarea" prompt="Instructions" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div :if={@form[:tiers].value >= 2}>
+      <div class="border border-gray-300 p-4 mb-3">
+        <p class="text-lg font-bold mb-2">2nd Tier</p>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <.input
+              field={@form[:t2_flavor_id]}
+              type="select"
+              options={@flavors}
+              label="Flavor"
+              prompt="Choose Flavor"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t2_filling_id]}
+              type="select"
+              options={@fillings}
+              label="Filling"
+              prompt="Choose Filling"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t2_add_cost]}
+              type="number"
+              label="Additional Cost $"
+              prompt="Additional Cost"
+            />
+          </div>
+          <div class="col-span-3">
+            <.input field={@form[:t2_description]} type="textarea" prompt="Instructions" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div :if={@form[:tiers].value >= 3}>
+      <div class="border border-gray-300 p-4 mb-3">
+        <p class="text-lg font-bold mb-2">3rd Tier</p>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <.input
+              field={@form[:t3_flavor_id]}
+              type="select"
+              options={@flavors}
+              label="Flavor"
+              prompt="Choose Flavor"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t3_filling_id]}
+              type="select"
+              options={@fillings}
+              label="Filling"
+              prompt="Choose Filling"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t3_add_cost]}
+              type="number"
+              label="Additional Cost $"
+              prompt="Additional Cost"
+            />
+          </div>
+          <div class="col-span-3">
+            <.input field={@form[:t3_description]} type="textarea" prompt="Instructions" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div :if={@form[:tiers].value >= 4}>
+      <div class="border border-gray-300 p-4 mb-3">
+        <p class="text-lg font-bold mb-2">4th Tier</p>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <.input
+              field={@form[:t4_flavor_id]}
+              type="select"
+              options={@flavors}
+              label="Flavor"
+              prompt="Choose Flavor"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t4_filling_id]}
+              type="select"
+              options={@fillings}
+              label="Filling"
+              prompt="Choose Filling"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t4_add_cost]}
+              type="number"
+              label="Additional Cost $"
+              prompt="Additional Cost"
+            />
+          </div>
+          <div class="col-span-3">
+            <.input field={@form[:t4_description]} type="textarea" prompt="Instructions" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div :if={@form[:tiers].value >= 5}>
+      <div class="border border-gray-300 p-4">
+        <p class="text-lg font-bold mb-2">5th Tier</p>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <.input
+              field={@form[:t5_flavor_id]}
+              type="select"
+              options={@flavors}
+              label="Flavor"
+              prompt="Choose Flavor"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t5_filling_id]}
+              type="select"
+              options={@fillings}
+              label="Filling"
+              prompt="Choose Filling"
+            />
+          </div>
+          <div>
+            <.input
+              field={@form[:t5_add_cost]}
+              type="number"
+              label="Additional Cost $"
+              prompt="Additional Cost"
+            />
+          </div>
+          <div class="col-span-3">
+            <.input field={@form[:t5_description]} type="textarea" prompt="Instructions" />
+          </div>
+        </div>
+      </div>
+    </div>
     <:actions>
       <.button phx-disable-with="Saving...">Save Cake</.button>
     </:actions>

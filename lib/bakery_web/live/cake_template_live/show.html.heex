@@ -1,0 +1,37 @@
+<.header>
+  Cake template <%= @cake_template.id %>
+  <:subtitle>This is a cake_template record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/cake_templates/#{@cake_template}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit cake_template</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @cake_template.name %></:item>
+  <:item title="Serves"><%= @cake_template.serves %></:item>
+  <:item title="Tiers"><%= @cake_template.tiers %></:item>
+  <:item title="Shape"><%= @cake_template.shape %></:item>
+  <:item title="Style"><%= @cake_template.style %></:item>
+  <:item title="Price"><%= @cake_template.price %></:item>
+  <:item title="Image"><%= @cake_template.image %></:item>
+  <:item title="T1 diam"><%= @cake_template.t1_diam %></:item>
+  <:item title="T2 diam"><%= @cake_template.t2_diam %></:item>
+  <:item title="T3 diam"><%= @cake_template.t3_diam %></:item>
+  <:item title="T4 diam"><%= @cake_template.t4_diam %></:item>
+  <:item title="T5 diam"><%= @cake_template.t5_diam %></:item>
+</.list>
+
+<.back navigate={~p"/cake_templates"}>Back to cake_templates</.back>
+
+<.modal :if={@live_action == :edit} id="cake_template-modal" show on_cancel={JS.patch(~p"/cake_templates/#{@cake_template}")}>
+  <.live_component
+    module={BakeryWeb.CakeTemplateLive.FormComponent}
+    id={@cake_template.id}
+    title={@page_title}
+    action={@live_action}
+    cake_template={@cake_template}
+    patch={~p"/cake_templates/#{@cake_template}"}
+  />
+</.modal>

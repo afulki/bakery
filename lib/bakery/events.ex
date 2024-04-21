@@ -118,6 +118,7 @@ defmodule Bakery.Events do
   """
   def list_cakes do
     Repo.all(Cake)
+    |> Repo.preload(cake_preload_list())
   end
 
   @doc """
@@ -134,7 +135,10 @@ defmodule Bakery.Events do
       ** (Ecto.NoResultsError)
 
   """
-  def get_cake!(id), do: Repo.get!(Cake, id)
+  def get_cake!(id) do
+    Repo.get!(Cake, id)
+    |> Repo.preload(cake_preload_list())
+  end
 
   @doc """
   Creates a cake.
@@ -152,6 +156,7 @@ defmodule Bakery.Events do
     %Cake{}
     |> Cake.changeset(attrs)
     |> Repo.insert()
+    |> Repo.preload(cake_preload_list())
   end
 
   @doc """
@@ -213,5 +218,22 @@ defmodule Bakery.Events do
     query = from(c in Cake, where: c.event_id == ^id)
 
     Repo.all(query)
+    |> Repo.preload(cake_preload_list())
+  end
+
+  defp cake_preload_list do
+    [
+      :event,
+      :t1_flavor,
+      :t1_filling,
+      :t2_flavor,
+      :t2_filling,
+      :t3_flavor,
+      :t3_filling,
+      :t4_flavor,
+      :t4_filling,
+      :t5_flavor,
+      :t5_filling
+    ]
   end
 end

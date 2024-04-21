@@ -104,6 +104,13 @@ defmodule BakeryWeb.Router do
 
       live "/flavors/:id", FlavorLive.Show, :show
       live "/flavors/:id/show/edit", FlavorLive.Show, :edit
+
+      live "/cake_templates", CakeTemplateLive.Index, :index
+      live "/cake_templates/new", CakeTemplateLive.Index, :new
+      live "/cake_templates/:id/edit", CakeTemplateLive.Index, :edit
+
+      live "/cake_templates/:id", CakeTemplateLive.Show, :show
+      live "/cake_templates/:id/show/edit", CakeTemplateLive.Show, :edit
     end
   end
 

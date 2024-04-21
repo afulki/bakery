@@ -89,7 +89,7 @@
   />
 </.modal>
 
-<.modal
+<.my_modal
   :if={@show_modal == :add_cake_modal}
   id="add-cake-modal"
   show
@@ -104,4 +104,4 @@
     event_id={@event.id}
     patch={~p"/events/#{@event}"}
   />
-</.modal>
+</.my_modal>

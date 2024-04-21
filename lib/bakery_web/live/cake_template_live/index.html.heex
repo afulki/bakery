@@ -1,0 +1,52 @@
+<.header>
+  Listing Cake templates
+  <:actions>
+    <.link patch={~p"/cake_templates/new"}>
+      <.button>New Cake template</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="cake_templates"
+  rows={@streams.cake_templates}
+  row_click={fn {_id, cake_template} -> JS.navigate(~p"/cake_templates/#{cake_template}") end}
+>
+  <:col :let={{_id, cake_template}} label="Name"><%= cake_template.name %></:col>
+  <:col :let={{_id, cake_template}} label="Serves"><%= cake_template.serves %></:col>
+  <:col :let={{_id, cake_template}} label="Tiers"><%= cake_template.tiers %></:col>
+  <:col :let={{_id, cake_template}} label="Shape"><%= cake_template.shape %></:col>
+  <:col :let={{_id, cake_template}} label="Style"><%= cake_template.style %></:col>
+  <:col :let={{_id, cake_template}} label="Price"><%= cake_template.price %></:col>
+  <:col :let={{_id, cake_template}} label="Image"><%= cake_template.image %></:col>
+  <:col :let={{_id, cake_template}} label="T1 diam"><%= cake_template.t1_diam %></:col>
+  <:col :let={{_id, cake_template}} label="T2 diam"><%= cake_template.t2_diam %></:col>
+  <:col :let={{_id, cake_template}} label="T3 diam"><%= cake_template.t3_diam %></:col>
+  <:col :let={{_id, cake_template}} label="T4 diam"><%= cake_template.t4_diam %></:col>
+  <:col :let={{_id, cake_template}} label="T5 diam"><%= cake_template.t5_diam %></:col>
+  <:action :let={{_id, cake_template}}>
+    <div class="sr-only">
+      <.link navigate={~p"/cake_templates/#{cake_template}"}>Show</.link>
+    </div>
+    <.link patch={~p"/cake_templates/#{cake_template}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, cake_template}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: cake_template.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="cake_template-modal" show on_cancel={JS.patch(~p"/cake_templates")}>
+  <.live_component
+    module={BakeryWeb.CakeTemplateLive.FormComponent}
+    id={@cake_template.id || :new}
+    title={@page_title}
+    action={@live_action}
+    cake_template={@cake_template}
+    patch={~p"/cake_templates"}
+  />
+</.modal>

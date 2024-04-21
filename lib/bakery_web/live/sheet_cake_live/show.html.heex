@@ -1,0 +1,28 @@
+<.header>
+  Sheet cake <%= @sheet_cake.id %>
+  <:subtitle>This is a sheet_cake record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/sheet_cakes/#{@sheet_cake}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit sheet_cake</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @sheet_cake.name %></:item>
+  <:item title="Quantity"><%= @sheet_cake.quantity %></:item>
+  <:item title="Price"><%= @sheet_cake.price %></:item>
+</.list>
+
+<.back navigate={~p"/sheet_cakes"}>Back to sheet_cakes</.back>
+
+<.modal :if={@live_action == :edit} id="sheet_cake-modal" show on_cancel={JS.patch(~p"/sheet_cakes/#{@sheet_cake}")}>
+  <.live_component
+    module={BakeryWeb.SheetCakeLive.FormComponent}
+    id={@sheet_cake.id}
+    title={@page_title}
+    action={@live_action}
+    sheet_cake={@sheet_cake}
+    patch={~p"/sheet_cakes/#{@sheet_cake}"}
+  />
+</.modal>
